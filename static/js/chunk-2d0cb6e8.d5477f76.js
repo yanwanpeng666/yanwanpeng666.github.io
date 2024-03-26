@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0cb6e8"],{"4a49":function(n,e,t){"use strict";t.r(e);var a=function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("div",{staticClass:"app-container"},[n._v("系统接口")])},c=[],s={},l=s,u=t("2877"),i=Object(u["a"])(l,a,c,!1,null,null,null);e["default"]=i.exports}}]);

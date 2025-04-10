@@ -1,263 +1,110 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><meta name=renderer content=webkit><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel=icon href=favicon.ico><title>管理系统</title><!--[if lt IE 11]><script>window.location.href='/html/ie.html';</script><![endif]--><style>html,
-    body,
-    #app {
-      height: 100%;
-      margin: 0px;
-      padding: 0px;
-    }
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-7NZL3PZ0NK" async></script>
+    <script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-7NZL3PZ0NK');
+</script>
 
-    .chromeframe {
-      margin: 0.2em 0;
-      background: #ccc;
-      color: #000;
-      padding: 0.2em 0;
-    }
-
-    #loader-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 999999;
-    }
-
-    #loader {
-      display: block;
-      position: relative;
-      left: 50%;
-      top: 50%;
-      width: 150px;
-      height: 150px;
-      margin: -75px 0 0 -75px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #FFF;
-      -webkit-animation: spin 2s linear infinite;
-      -ms-animation: spin 2s linear infinite;
-      -moz-animation: spin 2s linear infinite;
-      -o-animation: spin 2s linear infinite;
-      animation: spin 2s linear infinite;
-      z-index: 1001;
-    }
-
-    #loader:before {
-      content: "";
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      right: 5px;
-      bottom: 5px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #FFF;
-      -webkit-animation: spin 3s linear infinite;
-      -moz-animation: spin 3s linear infinite;
-      -o-animation: spin 3s linear infinite;
-      -ms-animation: spin 3s linear infinite;
-      animation: spin 3s linear infinite;
-    }
-
-    #loader:after {
-      content: "";
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      right: 15px;
-      bottom: 15px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #FFF;
-      -moz-animation: spin 1.5s linear infinite;
-      -o-animation: spin 1.5s linear infinite;
-      -ms-animation: spin 1.5s linear infinite;
-      -webkit-animation: spin 1.5s linear infinite;
-      animation: spin 1.5s linear infinite;
-    }
-
-
-    @-webkit-keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="keywords" content="md,markdown,markdown-editor,wechat,official-account,yanglbme,doocs" />
+    <meta name="description" content="Wechat Markdown Editor | 一款高度简洁的微信 Markdown 编辑器" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <title>微信 Markdown 编辑器 | Doocs 开源社区</title>
+    <link rel="shortcut icon" href="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/favicon.png" />
+    <link
+      rel="apple-touch-icon-precomposed"
+      href="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/1648303220922-7e14aefa-816e-44c1-8604-ade709ca1c69.png"
+    />
+    <style>
+      .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        font-size: 18px;
       }
 
-      100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
+      .loading::before {
+        content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAAt1BMVEX///8AAABIz0hHzkdIzkhIz0hIz0hHzkdIzkhFz0VAz0BHzUdIz0hHzkdIzkhIzUhHzUdHzUdIzkhEzEREzERGz0ZIz0hHzUdIzkhIzUhHzkdHzkdHzUdGz0ZIzkhHzkdKzkpIzUhGzUZD00NIzUhGzUZIzkhIzkhHzkdHzkdIzkhHz0dIzUhK1UpHzUdC0EJHzkdHzkdIz0hH1UdHzUdGzkZIzUhJ20lD10NJzklIzkhIzkj////r6/fCAAAAO3RSTlMAACDvoEBg0MAwEI9fz9+A8JDgDx5Ff/r9i+VdbHSDkx9RTRdce+6q6brLb58YSBvtd0oScFTxBxM/v5xq7LMAAAABYktHRACIBR1IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wwcCBssFsYwawAAAe9JREFUaN7t2tlywiAUBmABiQY1W6vWbna1i6Z2sYs97/9eNcQ6U40kEMhoh/824qeAxwSo1Wx2MUgimAAQLNNCAanDInWzCAUeahRxUsQx212NxGgaHhMq21sqCHIpdZFpRDoW2ROEtdpY/S1xu8XyEdZZ/BA8VcNbNO6wPIQbAK6akZa2v0rWN0mLk6+G+Gnr3O5qgnR1EjfOQviHCRS7yw02uyELwWGkbHAlCnGR3wkuM4WxLSuGkQNfmLYW5BDE8fUgXcHVXv9oYB45PoGBeQSd5ioaEHSWp+hA0DkMzSNoKFZKI78zuWsQuaA8l3BlEFnm2iL/FrlpZqanFbntZxmjO73IfdbVh31ERjQjj1LImEyYGMn+9xUjbELGKyRObviJI57CTzBdu/b8Ip7CDkkeQuIlQrffY5dB0rtvuqvINHnpqwISR8nTQsExSWbVW7ExSZ4jong1u2ZByJDu7kKsHszkCqQCIl+FLbKLyPtaefwwgWxEP2LvVixiEYtoQgqlHPJJC+XLLqoZRsyvpuKJB0R9XZiA18pfF+Yr3KqKS4qtcFeyVl/FrgNrlN8/aeTun3AlUh34aMPYsqcVOmWmsBMyW1Ysooi487nx/fhKThbwDdVvs0glpz0qObdSyQkchAOAQOUskU3h/AAe7qmqtAqp/QAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0xMi0yOFQwODoyNzo0NCswMDowMPJYdAwAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMTItMjhUMDg6Mjc6NDQrMDA6MDCDBcywAAAAAElFTkSuQmCC');
+        width: 100px;
+        height: 100px;
+        margin-bottom: 26px;
       }
 
-      100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
+      .loading.dark {
+        color: #ffffff;
+        background-color: #141414;
       }
-    }
 
-
-    #loader-wrapper .loader-section {
-      position: fixed;
-      top: 0;
-      width: 51%;
-      height: 100%;
-      background: #7171C6;
-      z-index: 1000;
-      -webkit-transform: translateX(0);
-      -ms-transform: translateX(0);
-      transform: translateX(0);
-    }
-
-    #loader-wrapper .loader-section.section-left {
-      left: 0;
-    }
-
-    #loader-wrapper .loader-section.section-right {
-      right: 0;
-    }
-
-
-    .loaded #loader-wrapper .loader-section.section-left {
-      -webkit-transform: translateX(-100%);
-      -ms-transform: translateX(-100%);
-      transform: translateX(-100%);
-      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-    }
-
-    .loaded #loader-wrapper .loader-section.section-right {
-      -webkit-transform: translateX(100%);
-      -ms-transform: translateX(100%);
-      transform: translateX(100%);
-      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-    }
-
-    .loaded #loader {
-      opacity: 0;
-      -webkit-transition: all 0.3s ease-out;
-      transition: all 0.3s ease-out;
-    }
-
-    .loaded #loader-wrapper {
-      visibility: hidden;
-      -webkit-transform: translateY(-100%);
-      -ms-transform: translateY(-100%);
-      transform: translateY(-100%);
-      -webkit-transition: all 0.3s 1s ease-out;
-      transition: all 0.3s 1s ease-out;
-    }
-
-    .no-js #loader-wrapper {
-      display: none;
-    }
-
-    .no-js h1 {
-      color: #222222;
-    }
-
-    .first-loading-wrp {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      min-height: 420px;
-      height: 100%;
-      background-color: #eee;
-    }
-
-    .first-loading-wrp>h1 {
-      font-size: 128px
-    }
-
-    .first-loading-wrp .loading-wrp {
-      padding: 98px;
-      display: flex;
-      justify-content: center;
-      align-items: center
-    }
-
-    .dot {
-      animation: antRotate 1.2s infinite linear;
-      transform: rotate(45deg);
-      position: relative;
-      display: inline-block;
-      font-size: 32px;
-      width: 32px;
-      height: 32px;
-      box-sizing: border-box
-    }
-
-    .dot i {
-      width: 14px;
-      height: 14px;
-      position: absolute;
-      display: block;
-      background-color: #1890ff;
-      border-radius: 100%;
-      transform: scale(.75);
-      transform-origin: 50% 50%;
-      opacity: .3;
-      animation: antSpinMove 1s infinite linear alternate
-    }
-
-    .dot i:nth-child(1) {
-      top: 0;
-      left: 0
-    }
-
-    .dot i:nth-child(2) {
-      top: 0;
-      right: 0;
-      -webkit-animation-delay: .4s;
-      animation-delay: .4s
-    }
-
-    .dot i:nth-child(3) {
-      right: 0;
-      bottom: 0;
-      -webkit-animation-delay: .8s;
-      animation-delay: .8s
-    }
-
-    .dot i:nth-child(4) {
-      bottom: 0;
-      left: 0;
-      -webkit-animation-delay: 1.2s;
-      animation-delay: 1.2s
-    }
-
-    @keyframes antRotate {
-      to {
-        -webkit-transform: rotate(405deg);
-        transform: rotate(405deg)
+      .loading .txt {
+        position: absolute;
+        bottom: 10%;
       }
-    }
 
-    @-webkit-keyframes antRotate {
-      to {
-        -webkit-transform: rotate(405deg);
-        transform: rotate(405deg)
+      .loading .txt::after {
+        content: '...';
+        animation: dots 1.5s steps(4, end) infinite;
       }
-    }
 
-    @keyframes antSpinMove {
-      to {
-        opacity: 1
+      @keyframes dots {
+        0% {
+          content: ' ';
+        }
+        25% {
+          content: '.';
+        }
+        50% {
+          content: '..';
+        }
+        75% {
+          content: '...';
+        }
       }
-    }
+    </style>
+    <script type="module" crossorigin src="/md/static/js/md-index-yMpWX_jc.js"></script>
+    <link rel="stylesheet" crossorigin href="/md/static/css/md-index-sVErR74W.css">
+  </head>
 
-    @-webkit-keyframes antSpinMove {
-      to {
-        opacity: 1
+  <body>
+    <noscript>
+      <strong>Please enable JavaScript to continue.</strong>
+    </noscript>
+    <div id="app">
+      <div class="loading">
+        <strong>致力于让 Markdown 编辑更简单</strong>
+        <p class="txt">正在加载编辑器</p>
+      </div>
+    </div>
+    <script>
+      const theme = localStorage.getItem('vueuse-color-scheme')
+      if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.querySelector('.loading').classList.add('dark')
       }
-    }</style><link href=static/css/chunk-libs.8b4e8738.css rel=stylesheet><link href=static/css/app.c3b8cd48.css rel=stylesheet></head><body><div id=app><div class=first-loading-wrp><div class=loading-wrp><span class="dot dot-spin"><i></i><i></i><i></i><i></i></span></div></div></div><script>(function(c){function e(e){for(var d,u,a=e[0],k=e[1],t=e[2],r=0,b=[];r<a.length;r++)u=a[r],Object.prototype.hasOwnProperty.call(h,u)&&h[u]&&b.push(h[u][0]),h[u]=0;for(d in k)Object.prototype.hasOwnProperty.call(k,d)&&(c[d]=k[d]);o&&o(e);while(b.length)b.shift()();return f.push.apply(f,t||[]),n()}function n(){for(var c,e=0;e<f.length;e++){for(var n=f[e],d=!0,u=1;u<n.length;u++){var a=n[u];0!==h[a]&&(d=!1)}d&&(f.splice(e--,1),c=k(k.s=n[0]))}return c}var d={},u={runtime:0},h={runtime:0},f=[];function a(c){return k.p+"static/js/"+({}[c]||c)+"."+{"chunk-005cb0c7":"882745ad","chunk-2349e5c6":"a7512adc","chunk-24fe1d3a":"1c8cf91d","chunk-2727631f":"07f4d0c8","chunk-2d0b1626":"157015dc","chunk-2d0b2b28":"5a870f11","chunk-1223c1b2":"43b2e791","chunk-2d0bce05":"be66d806","chunk-2d0c1ee6":"15582174","chunk-2d0c8e18":"a6aef979","chunk-2d0cb6e8":"d5477f76","chunk-2d0da2ea":"4cabda15","chunk-2d0e2366":"68f2ed78","chunk-01ef53b6":"6d8443e7","chunk-7038a376":"0d3e238f","chunk-2d0e4f95":"adbe3dfb","chunk-2d0e9010":"523a2440","chunk-2d0f012d":"1bde8e38","chunk-2d20955d":"dc46bb61","chunk-2d21080f":"6c97cac1","chunk-2d212b99":"b700d975","chunk-2d2102b6":"a5e01d67","chunk-5d570b5d":"2d657921","chunk-0d5b0085":"d73c10bc","chunk-60006966":"79c95908","chunk-7d80f20e":"b58aaa18","chunk-e2ef1232":"58b54d3e","chunk-2d217a3b":"993047d7","chunk-2d217c9e":"8ec1968a","chunk-2d21a3bb":"8a51ac4c","chunk-2d22252c":"b44b1913","chunk-2d230898":"6eb88cc0","chunk-2d238605":"0c760cd5","chunk-32dedaa2":"aeaf976e","chunk-345dd7f2":"7c587b81","chunk-371fa0ca":"b5b0103f","chunk-7b2b4240":"41265c64","chunk-39413ce8":"5c38e884","chunk-3a08d90c":"9fb0d7ea","chunk-444dbb2e":"f254c779","chunk-4d7fefbc":"060942d0","chunk-55d183ec":"30ce7ef0","chunk-582b2a7a":"199f24c2","chunk-5a2f9c7b":"2b51f7ef","chunk-2d0de3b1":"dedb381a","chunk-54f34d38":"157f1c67","chunk-3b0424d2":"e27c0776","chunk-42855fd6":"354cd9ae","chunk-712f179b":"d5cdc8a8","chunk-d866f130":"c39d72f5","chunk-5b83c289":"7fd285a8","chunk-7fa21b9b":"ae92ff1d","chunk-665cac9d":"2cd86727","chunk-68702101":"2ace408d","chunk-6fbfb59c":"7a44e592","chunk-7884ac04":"9065a298","chunk-1348daec":"eec522b9","chunk-2bb7b688":"be7315ff","chunk-2d0c94ba":"b83913a5","chunk-4b1e4dca":"3aa0315d","chunk-50e312d8":"5e27c10a","chunk-7d993ace":"5ec0a9c3","chunk-8579d4da":"217c52f3","chunk-8904f0d6":"786794cc","chunk-8ee3fc10":"5d541904","chunk-a662c34e":"956424d0","chunk-c28ad000":"3e7513a8","chunk-d19c1a98":"c7314247"}[c]+".js"}function k(e){if(d[e])return d[e].exports;var n=d[e]={i:e,l:!1,exports:{}};return c[e].call(n.exports,n,n.exports,k),n.l=!0,n.exports}k.e=function(c){var e=[],n={"chunk-24fe1d3a":1,"chunk-1223c1b2":1,"chunk-01ef53b6":1,"chunk-7038a376":1,"chunk-5d570b5d":1,"chunk-7d80f20e":1,"chunk-32dedaa2":1,"chunk-345dd7f2":1,"chunk-371fa0ca":1,"chunk-7b2b4240":1,"chunk-444dbb2e":1,"chunk-4d7fefbc":1,"chunk-55d183ec":1,"chunk-5a2f9c7b":1,"chunk-42855fd6":1,"chunk-d866f130":1,"chunk-5b83c289":1,"chunk-7d993ace":1,"chunk-8904f0d6":1,"chunk-c28ad000":1};u[c]?e.push(u[c]):0!==u[c]&&n[c]&&e.push(u[c]=new Promise((function(e,n){for(var d="static/css/"+({}[c]||c)+"."+{"chunk-005cb0c7":"31d6cfe0","chunk-2349e5c6":"31d6cfe0","chunk-24fe1d3a":"a37015d3","chunk-2727631f":"31d6cfe0","chunk-2d0b1626":"31d6cfe0","chunk-2d0b2b28":"31d6cfe0","chunk-1223c1b2":"f5d22749","chunk-2d0bce05":"31d6cfe0","chunk-2d0c1ee6":"31d6cfe0","chunk-2d0c8e18":"31d6cfe0","chunk-2d0cb6e8":"31d6cfe0","chunk-2d0da2ea":"31d6cfe0","chunk-2d0e2366":"31d6cfe0","chunk-01ef53b6":"c621826b","chunk-7038a376":"c621826b","chunk-2d0e4f95":"31d6cfe0","chunk-2d0e9010":"31d6cfe0","chunk-2d0f012d":"31d6cfe0","chunk-2d20955d":"31d6cfe0","chunk-2d21080f":"31d6cfe0","chunk-2d212b99":"31d6cfe0","chunk-2d2102b6":"31d6cfe0","chunk-5d570b5d":"2e1b1bbe","chunk-0d5b0085":"31d6cfe0","chunk-60006966":"31d6cfe0","chunk-7d80f20e":"83885ba0","chunk-e2ef1232":"31d6cfe0","chunk-2d217a3b":"31d6cfe0","chunk-2d217c9e":"31d6cfe0","chunk-2d21a3bb":"31d6cfe0","chunk-2d22252c":"31d6cfe0","chunk-2d230898":"31d6cfe0","chunk-2d238605":"31d6cfe0","chunk-32dedaa2":"04b0cb9d","chunk-345dd7f2":"bbc9fa95","chunk-371fa0ca":"32a48c2c","chunk-7b2b4240":"ce4bb946","chunk-39413ce8":"31d6cfe0","chunk-3a08d90c":"31d6cfe0","chunk-444dbb2e":"3e10cd59","chunk-4d7fefbc":"2a7c13ea","chunk-55d183ec":"4e8637e7","chunk-582b2a7a":"31d6cfe0","chunk-5a2f9c7b":"84f98409","chunk-2d0de3b1":"31d6cfe0","chunk-54f34d38":"31d6cfe0","chunk-3b0424d2":"31d6cfe0","chunk-42855fd6":"793cbdf1","chunk-712f179b":"31d6cfe0","chunk-d866f130":"793cbdf1","chunk-5b83c289":"ce2a2394","chunk-7fa21b9b":"31d6cfe0","chunk-665cac9d":"31d6cfe0","chunk-68702101":"31d6cfe0","chunk-6fbfb59c":"31d6cfe0","chunk-7884ac04":"31d6cfe0","chunk-1348daec":"31d6cfe0","chunk-2bb7b688":"31d6cfe0","chunk-2d0c94ba":"31d6cfe0","chunk-4b1e4dca":"31d6cfe0","chunk-50e312d8":"31d6cfe0","chunk-7d993ace":"d8b87dd8","chunk-8579d4da":"31d6cfe0","chunk-8904f0d6":"a00b75fd","chunk-8ee3fc10":"31d6cfe0","chunk-a662c34e":"31d6cfe0","chunk-c28ad000":"17fbdb6b","chunk-d19c1a98":"31d6cfe0"}[c]+".css",h=k.p+d,f=document.getElementsByTagName("link"),a=0;a<f.length;a++){var t=f[a],r=t.getAttribute("data-href")||t.getAttribute("href");if("stylesheet"===t.rel&&(r===d||r===h))return e()}var b=document.getElementsByTagName("style");for(a=0;a<b.length;a++){t=b[a],r=t.getAttribute("data-href");if(r===d||r===h)return e()}var o=document.createElement("link");o.rel="stylesheet",o.type="text/css",o.onload=e,o.onerror=function(e){var d=e&&e.target&&e.target.src||h,f=new Error("Loading CSS chunk "+c+" failed.\n("+d+")");f.code="CSS_CHUNK_LOAD_FAILED",f.request=d,delete u[c],o.parentNode.removeChild(o),n(f)},o.href=h;var i=document.getElementsByTagName("head")[0];i.appendChild(o)})).then((function(){u[c]=0})));var d=h[c];if(0!==d)if(d)e.push(d[2]);else{var f=new Promise((function(e,n){d=h[c]=[e,n]}));e.push(d[2]=f);var t,r=document.createElement("script");r.charset="utf-8",r.timeout=120,k.nc&&r.setAttribute("nonce",k.nc),r.src=a(c);var b=new Error;t=function(e){r.onerror=r.onload=null,clearTimeout(o);var n=h[c];if(0!==n){if(n){var d=e&&("load"===e.type?"missing":e.type),u=e&&e.target&&e.target.src;b.message="Loading chunk "+c+" failed.\n("+d+": "+u+")",b.name="ChunkLoadError",b.type=d,b.request=u,n[1](b)}h[c]=void 0}};var o=setTimeout((function(){t({type:"timeout",target:r})}),12e4);r.onerror=r.onload=t,document.head.appendChild(r)}return Promise.all(e)},k.m=c,k.c=d,k.d=function(c,e,n){k.o(c,e)||Object.defineProperty(c,e,{enumerable:!0,get:n})},k.r=function(c){"undefined"!==typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(c,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(c,"__esModule",{value:!0})},k.t=function(c,e){if(1&e&&(c=k(c)),8&e)return c;if(4&e&&"object"===typeof c&&c&&c.__esModule)return c;var n=Object.create(null);if(k.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:c}),2&e&&"string"!=typeof c)for(var d in c)k.d(n,d,function(e){return c[e]}.bind(null,d));return n},k.n=function(c){var e=c&&c.__esModule?function(){return c["default"]}:function(){return c};return k.d(e,"a",e),e},k.o=function(c,e){return Object.prototype.hasOwnProperty.call(c,e)},k.p="",k.oe=function(c){throw console.error(c),c};var t=window["webpackJsonp"]=window["webpackJsonp"]||[],r=t.push.bind(t);t.push=e,t=t.slice();for(var b=0;b<t.length;b++)e(t[b]);var o=r;n()})([]);</script><script src=static/js/chunk-elementUI.a8650616.js></script><script src=static/js/chunk-libs.7dcfa62d.js></script><script src=static/js/app.3f4c43ce.js></script></body></html>
+    </script>
+    <script>
+      window.MathJax = {
+        loader: { load: ['[tex]/ams'] },
+        tex: { packages: { '[+]': ['ams'] }, tags: 'ams' },
+        svg: { fontCache: 'none' },
+      }
+    </script>
+    <script
+      id="MathJax-script"
+      src="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/npm/mathjax@3/es5/tex-svg.js"
+    ></script>
+  </body>
+  <script src="https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/wechatsync/article-syncjs@latest/dist/main.js"></script>
+</html>

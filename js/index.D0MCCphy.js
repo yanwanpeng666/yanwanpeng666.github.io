@@ -1,1 +1,0 @@
-import{d as a,g as d,f as s,n as e,l as t,aJ as n}from"./index.Dv9sjPYC.js";const o=n(a({__name:"index",props:{padding:{type:String,default:"p-2"}},setup:a=>(n,o)=>(s(),d("div",{"cursor-pointer":"","flex-center":"",rounded:"",class:e(["el",a.padding])},[t(n.$slots,"default",{},void 0,!0)],2))}),[["__scopeId","data-v-0a27dadb"]]);export{o as C};

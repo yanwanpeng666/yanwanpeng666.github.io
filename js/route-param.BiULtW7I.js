@@ -1,1 +1,0 @@
-import{d as a,aG as s,g as t,f as e,G as r,i as n}from"./index.Dv9sjPYC.js";const p={class:"p-5"},i=a({name:"Other",inheritAttrs:!1,__name:"route-param",setup(a){const i=s().query.type;return(a,s)=>(e(),t("div",p,"路由参数type："+r(n(i)),1))}});export{i as default};

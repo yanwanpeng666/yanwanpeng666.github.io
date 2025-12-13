@@ -1,1 +1,0 @@
-import{aJ as a,g as e,f as r,D as s}from"./index.Dv9sjPYC.js";const d={class:"app-container"};const t=a({},[["render",function(a,t){return r(),e("div",d,[...t[0]||(t[0]=[s("iframe",{src:"https://www.apifox.cn/apidoc/shared-195e783f-4d85-4235-a038-eec696de4ea5",width:"100%",height:"100%",frameborder:"0"},null,-1)])])}],["__scopeId","data-v-b56d10a7"]]);export{t as default};

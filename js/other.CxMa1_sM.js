@@ -1,0 +1,1 @@
+import{d as e,ah as t,e as s,h as a,D as r,g as n}from"./index.DbrnSrZI.js";const o=e({name:"Other",inheritAttrs:!1,__name:"other",setup(e){const o=t().query.type;return(e,t)=>(s(),a("div",null,"路由参数："+r(n(o)),1))}});export{o as default};

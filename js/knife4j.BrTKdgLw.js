@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper.BCo6x5W8.js";import{e as r,h as t,B as a}from"./index.DkormZFh.js";const o={class:"app-container"};const s=e({},[["render",function(e,s){return r(),t("div",o,s[0]||(s[0]=[a("iframe",{src:"http://vapi.youlai.tech/doc.html",width:"100%",height:"100%",frameborder:"0"},null,-1)]))}],["__scopeId","data-v-55d6b447"]]);export{s as default};

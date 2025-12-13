@@ -1,0 +1,1 @@
+import{d as e,o as s,e as a,f as t,bA as l}from"./index.Dv9sjPYC.js";const o=e({name:"MultiLevel1",__name:"level1",setup:e=>(s(()=>{}),(e,s)=>{const o=l;return t(),a(o,{closable:!1,title:"菜单一级"})})});export{o as _};
